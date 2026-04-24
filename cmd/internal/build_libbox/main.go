@@ -203,14 +203,10 @@ func buildApple() {
 		"-v",
 		"-target", bindTarget,
 		"-libname=box",
-		"-tags-not-macos=with_low_memory",
 		"-iosversion=15.0",
 		"-macosversion=13.0",
 		"-tvosversion=17.0",
 	}
-	//if !withTailscale {
-	//	args = append(args, "-tags-macos="+strings.Join(memcTags, ","))
-	//}
 
 	if !debugEnabled {
 		args = append(args, sharedFlags...)
@@ -218,10 +214,27 @@ func buildApple() {
 		args = append(args, debugFlags...)
 	}
 
-	tags := append(sharedTags, darwinTags...)
-	//if withTailscale {
-	//	tags = append(tags, memcTags...)
-	//}
+	// Apple target ships Hysteria2 + WireGuard + routing only.
+	// Strip tailscale (incl. ts_omit_*), naive, clash_api, dhcp from the shared defaults
+	// and gate include/registry.go via libbox_minimal.
+	tags := filterTags(append([]string{}, sharedTags...),
+		"with_tailscale",
+		"with_naive_outbound",
+		"with_clash_api",
+		"ts_omit_logtail",
+		"ts_omit_ssh",
+		"ts_omit_drive",
+		"ts_omit_taildrop",
+		"ts_omit_webclient",
+		"ts_omit_doctor",
+		"ts_omit_capture",
+		"ts_omit_kube",
+		"ts_omit_aws",
+		"ts_omit_synology",
+		"ts_omit_bird",
+	)
+	tags = append(tags, filterTags(darwinTags, "with_dhcp")...)
+	tags = append(tags, "libbox_minimal")
 	if debugEnabled {
 		tags = append(tags, debugTags...)
 	}
