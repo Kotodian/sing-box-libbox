@@ -61,13 +61,16 @@ func DNSTransportRegistry() *dns.TransportRegistry {
 
 	transport.RegisterTCP(registry)
 	transport.RegisterUDP(registry)
-	transport.RegisterTLS(registry)
 	transport.RegisterHTTPS(registry)
 	hosts.RegisterTransport(registry)
 	local.RegisterTransport(registry)
 	fakeip.RegisterTransport(registry)
 
-	registerQUICTransports(registry)
+	// Opt-in via build tags:
+	//   -tags with_dns_dot    → DNS-over-TLS (DoT)
+	//   -tags with_dns_quic   → DNS-over-QUIC + DNS-over-HTTP/3
+	registerLibboxDoT(registry)
+	registerLibboxDNSQUIC(registry)
 
 	return registry
 }
