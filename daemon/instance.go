@@ -111,7 +111,7 @@ func (s *StartedService) newInstance(profileContent string, overrideOptions *Ove
 	boxInstance, err := box.New(box.Options{
 		Context:           ctx,
 		Options:           options,
-		PlatformLogWriter: s,
+		PlatformLogWriter: platformLogWriter(s),
 	})
 	if err != nil {
 		cancel()
