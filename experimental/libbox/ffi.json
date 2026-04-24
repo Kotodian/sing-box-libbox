@@ -85,7 +85,6 @@
           "with_gvisor",
           "with_quic",
           "with_wireguard",
-          "with_utls",
           "badlinkname",
           "tfogo_checklinkname0",
           "grpcnotrace",

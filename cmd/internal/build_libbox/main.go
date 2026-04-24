@@ -215,12 +215,13 @@ func buildApple() {
 	}
 
 	// Apple target ships Hysteria2 + WireGuard + routing only.
-	// Strip tailscale (incl. ts_omit_*), naive, clash_api, dhcp from the shared defaults
-	// and gate include/registry.go via libbox_minimal.
+	// Strip tailscale (incl. ts_omit_*), naive, clash_api, utls, dhcp from the shared
+	// defaults and gate include/registry.go via libbox_minimal.
 	tags := filterTags(append([]string{}, sharedTags...),
 		"with_tailscale",
 		"with_naive_outbound",
 		"with_clash_api",
+		"with_utls",
 		"ts_omit_logtail",
 		"ts_omit_ssh",
 		"ts_omit_drive",
