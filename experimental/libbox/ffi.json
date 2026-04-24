@@ -171,14 +171,7 @@
       "type": "apple",
       "build": "apple",
       "targets": [
-        "ios/arm64",
-        "ios/simulator/arm64",
-        "ios/simulator/amd64",
-        "tvos/arm64",
-        "tvos/simulator/arm64",
-        "tvos/simulator/amd64",
-        "macos/arm64",
-        "macos/amd64"
+        "ios/arm64"
       ],
       "languages": [{ "type": "objc" }],
       "artifacts": [

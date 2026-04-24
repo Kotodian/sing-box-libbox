@@ -192,10 +192,9 @@ func buildApple() {
 	var bindTarget string
 	if platform != "" {
 		bindTarget = platform
-	} else if debugEnabled {
-		bindTarget = "ios"
 	} else {
-		bindTarget = "ios,iossimulator,tvos,tvossimulator,macos"
+		// Real-device arm64 iOS only; drop simulator/tvos/macos to shrink xcframework.
+		bindTarget = "ios/arm64"
 	}
 
 	args := []string{
